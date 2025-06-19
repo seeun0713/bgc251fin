@@ -79,9 +79,9 @@ function draw() {
     let b = video.pixels[idx * 4 + 2];
     let a = video.pixels[idx * 4 + 3];
 
-    if (surprise > 0.7) {
+    if (surprise > 0.5) {
       fill(255 - r, 255 - g, 255 - b, a);
-    } else if (happiness > 0.7) {
+    } else if (happiness > 0.5) {
       fill(r, g, 0, a);
     } else {
       fill(r, g, b, a);
