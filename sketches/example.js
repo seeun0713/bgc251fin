@@ -5,6 +5,7 @@ let detections = [];
 
 let video;
 let surprise = 0;
+let happiness = 0;
 
 function setup() {
   new Responsive().createResponsiveCanvas(800, 600, 'contain', true);
@@ -41,14 +42,19 @@ function gotFaces(error, result) {
     surprise = 0;
   }
 
+  if (detections.length > 0) {
+    let expr = detections[0].expressions;
+    happiness = expr.happy || 0;
+  } else {
+    happiness = 0;
+  }
+
   faceapi.detect(gotFaces);
 }
 
 function draw() {
   background('#000000');
   noStroke();
-
-  Responsive.drawReferenceGrid('#ffffff');
 
   video.loadPixels();
 
@@ -73,8 +79,10 @@ function draw() {
     let b = video.pixels[idx * 4 + 2];
     let a = video.pixels[idx * 4 + 3];
 
-    if (surprise > 0.5) {
+    if (surprise > 0.7) {
       fill(255 - r, 255 - g, 255 - b, a);
+    } else if (happiness > 0.7) {
+      fill(r, g, 0, a);
     } else {
       fill(r, g, b, a);
     }
